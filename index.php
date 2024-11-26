@@ -11,6 +11,7 @@
  * Création de devis
  */
 use Models\Autoloader;
+ini_set("date.timezone", "Europe/Paris");
 require_once "./utils/Defines.php";
 require_once "./models/Autoloader.php";
 
@@ -32,8 +33,28 @@ $article_test = [
 /**
  * Utilisation classique de la méthode add(), de la classe Article
  */
-$article->add(
-  $article_test["title"],
-  $article_test["content"],
-  $article_test["author"],
+// $article->add(
+//   $article_test["title"],
+//   $article_test["content"],
+//   $article_test["author"],
+// );
+
+var_dump($article::getList());
+echo "<hr/>";
+var_dump($article::getById(1));
+
+$article_updated = [
+  "id" => 1,
+  "title" => "Test modifié",
+  "content" => "Contenu modifié",
+  "author" => "WebdevooUpdated",
+  "created_date" => new \Datetime("now")
+];
+
+$article::update(
+  $article_updated["id"],
+  $article_updated["title"],
+  $article_updated["content"],
+  $article_updated["author"],
+  $article_updated["created_date"]->sub(\DateInterval::createFromDateString("1 hour"))->format("Y/m/d H:i:s"),
 );

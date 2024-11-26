@@ -99,6 +99,90 @@ class Article{
 
   }
 
+  public static function getList(){
+    try{
+
+      $req = self::$bdd->prepare("SELECT * FROM articles ORDER BY id ASC");
+
+      if(!$req->execute()){
+        Utils::launchException("Une erreur s'est produite lors de la récupération de la liste des articles.");
+      }
+
+      $articles = $req->fetch(\PDO::FETCH_OBJ);
+      $req->closeCursor();
+
+      if(!$articles){
+        Utils::launchException("La table articles est vide.");
+      }
+
+      return $articles;
+
+    }catch(\Exception $e){
+      Utils::readException($e);
+    }
+  }
+
+  public static function getById(int $id){
+    try{
+
+      $req = self::$bdd->prepare("SELECT * FROM articles WHERE id=:id");
+      $req->bindValue(":id", $id, \PDO::PARAM_INT);
+
+      if(!$req->execute()){
+        Utils::launchException("Une erreur s'est produite lors de la récupération de l'article.");
+      }
+
+      $article = $req->fetch(\PDO::FETCH_OBJ);
+
+      if(!$article){
+        Utils::launchException("L'article ciblé est introuvable.");
+      }
+
+      return $article;
+
+    }catch(\Exception $e){
+      Utils::readException($e);
+    }
+  }
+
+  public static function update(
+    int $id,
+    string $title,
+    string $content,
+    string $author,
+    string $created_date
+  ){
+
+    try{
+
+      $req = self::$bdd->prepare("UPDATE articles SET title=:title, content=:content, author=:author, created_date=:created_date WHERE id=:id");
+      $req->bindValue(":id", $id, \PDO::PARAM_INT);
+      $req->bindValue(":title", $title, \PDO::PARAM_STR);
+      $req->bindValue(":content", $content, \PDO::PARAM_STR);
+      $req->bindValue(":author", $author, \PDO::PARAM_STR);
+      $req->bindValue(":created_date", $created_date, \PDO::PARAM_STR);
+
+      if(!$req->execute()){
+        Utils::launchException("Une erreur s'est produite lors de la mise à jour de l'article.");
+      }
+
+      return true;
+
+    }catch(\Exception $e){
+      Utils::readException($e);
+    }
+
+  }
+
+  public static function deleteAll(){
+    // 🩻 SUPPRIME TOUTES LES DONNÉES DE LA TABLE ARTICLES !
+    return self::$bdd->exec("DELETE FROM articles");
+  }
+
+  public static function deleteArticle(int $id){
+    return self::$bdd->exec("DELETE FROM articles WHERE id=$id");
+  }
+
   //Créer les méthodes BDD
   public static function setBdd($bdd){
     self::$bdd = $bdd;
