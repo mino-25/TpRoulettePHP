@@ -10,8 +10,16 @@
  * Reviews
  * Création de devis
  */
-
+use Models\Autoloader;
 require_once "./utils/Defines.php";
+require_once "./models/Autoloader.php";
+
+/**
+ * Use autoloader to import all models
+ */
+Autoloader::register();
+use Models\BDD;
+use Models\Article;
 
 $article = new Article(BDD::connect());
 
