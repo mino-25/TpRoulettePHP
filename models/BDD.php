@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+use PDO;
+use Exception;
+
 class BDD{
 
   public static function connect(){

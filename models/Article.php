@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Article{
 
   // Les mots clés d'accès sont : public, protected et private.
@@ -10,7 +12,7 @@ class Article{
   protected string $created_date;
   protected string $modification_date;
 
-  private $bdd;
+  private static $bdd;
 
   public function __construct($bdd = null){
 
@@ -56,8 +58,8 @@ class Article{
     self::$author = $author;
   }
   
-  public static function getCreatedDate(): Datetime{
-    $date = new Datetime(self::$created_date);
+  public static function getCreatedDate(): \Datetime{
+    $date = new \Datetime(self::$created_date);
     return $date;
   }
   
@@ -65,13 +67,36 @@ class Article{
     self::$created_date = $created_date;
   }
   
-  public static function getModificationDate(): Datetime{
-    $date = new Datetime(self::$modification_date);
+  public static function getModificationDate(): \Datetime{
+    $date = new \Datetime(self::$modification_date);
     return $date;
   }
   
   public static function setModificationDate(string $modification_date): void{
     self::$modification_date = $modification_date;
+  }
+
+  public static function add(
+    string $title,
+    string $content,
+    string $author
+  ){
+
+    try{
+
+      $req = self::$bdd->prepare("INSERT INTO articles(title, content, author) VALUES(:title, :content, :author)");
+      $req->bindValue(":title", $title, \PDO::PARAM_STR);
+      $req->bindValue(":content", $content, \PDO::PARAM_STR);
+      $req->bindValue(":author", $author, \PDO::PARAM_STR);
+
+      if(!$req->execute()){
+        Utils::launchException("Une erreur s'est produite lors de l'ajout d'un article.");
+      }
+
+    }catch(\Exception $e){
+      Utils::readException($e);
+    }
+
   }
 
   //Créer les méthodes BDD

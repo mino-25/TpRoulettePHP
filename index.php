@@ -11,8 +11,21 @@
  * Création de devis
  */
 
-define("ROOT", $_SERVER["DOCUMENT_ROOT"]);
-
-echo "Hello world !";
+require_once "./utils/Defines.php";
 
 $article = new Article(BDD::connect());
+
+$article_test = [
+  "title" => "Test",
+  "content" => "Contenu de test",
+  "author" => "webdevoo"
+];
+
+/**
+ * Utilisation classique de la méthode add(), de la classe Article
+ */
+$article->add(
+  $article_test["title"],
+  $article_test["content"],
+  $article_test["author"],
+);
