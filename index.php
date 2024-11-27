@@ -11,11 +11,10 @@
  * Création de devis
  */
 
-use Models\Autoloader;
-
 ini_set("date.timezone", "Europe/Paris");
 require_once "./utils/Defines.php";
 require_once "./models/Autoloader.php";
+use Models\Autoloader;
 
 /**
  * Use autoloader to import all models
@@ -23,8 +22,9 @@ require_once "./models/Autoloader.php";
 Autoloader::register();
 
 use Models\BDD;
-use Models\Article;
 use Models\Router;
+use Models\Article;
+use Controllers\ArticlesController;
 
 $article = new Article(BDD::connect());
 
@@ -74,9 +74,7 @@ switch (true) {
     });
     break;
   case ($uri === "/articles"):
-    $router->get("/articles", function () {
-      var_dump(Article::getList());
-    });
+    $router->get("/articles", ArticlesController::getList());
     break;
   case (preg_match("/^\/articles\/(\d+)$/", $uri )):
     $router->get($uri, function (int $id) {
