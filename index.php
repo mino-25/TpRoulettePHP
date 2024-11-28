@@ -14,6 +14,7 @@
 ini_set("date.timezone", "Europe/Paris");
 require_once "./utils/Defines.php";
 require_once "./models/Autoloader.php";
+
 use Models\Autoloader;
 
 /**
@@ -43,8 +44,6 @@ $article_test = [
 //   $article_test["author"],
 // );
 
-// var_dump($article::getList());
-// echo "<hr/>";
 // var_dump($article::getById(1));
 
 // $article_updated = [
@@ -66,6 +65,7 @@ $article_test = [
 $router = new Router();
 
 $uri = $_SERVER["REQUEST_URI"];
+$idParam = (int) preg_replace("/[\D]+/", "", $uri);
 
 switch (true) {
   case ($uri === "/"):
@@ -73,19 +73,18 @@ switch (true) {
       echo "Page d'accueil";
     });
     break;
-  case ($uri === "/articles"):
+  case (str_contains($uri, "/articles")):
+    if ($idParam) {
+      $router->get("/articles/$idParam", function () {
+        echo "Affichage d'un article seul.";
+      });
+      exit;
+    }
     $router->get("/articles", ArticlesController::getList());
     break;
-  case (preg_match("/^\/articles\/(\d+)$/", $uri )):
-    $router->get($uri, function (int $id) {
-      if (!is_null($id)) {
-        var_dump(Article::getById($id));
-      }
-    });
+  default:
+    echo "404";
     break;
-    default:
-      echo "404";
-      break;
 }
 
 $router->run();

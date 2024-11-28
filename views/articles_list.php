@@ -22,4 +22,4 @@
 </section>
 
 <?php 
-$mainContent = ob_end_flush();
+$mainContent = ob_get_clean();
