@@ -25,7 +25,9 @@ Autoloader::register();
 use Models\BDD;
 use Models\Router;
 use Models\Article;
+use Controllers\ErrorsController;
 use Controllers\ArticlesController;
+use Controllers\BlogController;
 
 $article = new Article(BDD::connect());
 
@@ -69,21 +71,30 @@ $idParam = (int) preg_replace("/[\D]+/", "", $uri);
 
 switch (true) {
   case ($uri === "/"):
-    $router->get("/", function () {
-      echo "Page d'accueil";
-    });
+    $router->get("/", BlogController::index());
     break;
   case (str_contains($uri, "/articles")):
-    if ($idParam) {
-      $router->get("/articles/$idParam", function () {
-        echo "Affichage d'un article seul.";
-      });
+    if ($idParam && !str_contains($uri, "/update")) {
+      $router->get("/articles/$idParam", ArticlesController::getById($idParam));
       exit;
     }
+    else if($idParam && str_contains($uri, "/update")){
+      $router->get("/articles/update/$idParam", ArticlesController::update($idParam));
+      exit;
+    }
+    else if(!$idParam && str_contains($uri, "/update")){
+      $router->post("/articles/update", ArticlesController::updateArticle());
+      exit;
+    }
+    else if(!$idParam && str_contains($uri, "/delete")){
+      $router->post("/articles/delete", ArticlesController::deleteArticle());
+      exit;
+    }
+
     $router->get("/articles", ArticlesController::getList());
     break;
   default:
-    echo "404";
+    ErrorsController::launchError(404);
     break;
 }
 

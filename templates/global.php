@@ -21,7 +21,7 @@
       <ul class="main-nav-links">
         <li><a href="/">Accueil</a></li>
         <li><a href="/articles">Nos articles</a></li>
-        <li><a href="/articles/9">Article 9</a></li>
+        <li><a href="/articles/1">Article 1</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
       <div class="burger">

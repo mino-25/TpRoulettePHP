@@ -5,12 +5,12 @@ namespace Models;
 class Article{
 
   // Les mots clés d'accès sont : public, protected et private.
-  protected int $id;
-  protected string $title;
-  protected string $content;
-  protected string $author;
-  protected string $created_date;
-  protected string $modification_date;
+  public static int $id;
+  public static string $title;
+  public static string $content;
+  public static string $author;
+  public static string $created_date;
+  public static string $modification_date;
 
   private static $bdd;
 
@@ -76,6 +76,23 @@ class Article{
     self::$modification_date = $modification_date;
   }
 
+  public static function setAllParams($params){
+    [
+      "id" => $id,
+      "title" => $title,
+      "content" => $content,
+      "author" => $author,
+      "created_date" => $created_date,
+      "modification_date" => $modification_date,
+    ] = get_object_vars($params);
+    self::setId($id);
+    self::setTitle($title);
+    self::setContent($content);
+    self::setAuthor($author);
+    self::setCreatedDate($created_date);
+    self::setModificationDate($modification_date);
+  }
+
   public static function add(
     string $title,
     string $content,
@@ -137,6 +154,8 @@ class Article{
       if(!$article){
         Utils::launchException("L'article ciblé est introuvable.");
       }
+
+      self::setAllParams($article);
 
       return $article;
 

@@ -73,7 +73,7 @@ body {
   color: var(--primary-color);
   font-family: system-ui, sans-serif;
   font-size:17px;
-  line-height:140%;
+  line-height:180%;
 }
 
 body.cooking-theme {
@@ -134,6 +134,19 @@ a:visited{
 
 a:hover{
   color:var(--primary-color);
+}
+
+.cta-links{
+  width:max-content;
+  text-decoration:none;
+  padding:.2rem .4rem;
+  border:1px solid var(--primary-color);
+}
+
+.cta-links:hover{
+  background-color:var(--primary-color);
+  color:var(--secondary-color);
+  border:1px solid transparent;
 }
 
 .main-head {
@@ -214,11 +227,26 @@ a:hover{
   justify-content:flex-start;
   align-items:center;
   flex-wrap:wrap;
+  gap:3rem;
   padding:.4% .8%;
 }
 
+.main-sections-title{
+  width:100%;
+}
+
 .main-articles{
+  min-width:40dvw;
   max-width:80dvw;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:stretch;
+  gap:.4rem;
+  padding:2% 2.4%;
+  border-radius:.4rem;
+  background-color:var(--art-light-color);
+  box-shadow:0 0 .4rem 0 var(--primary-color);
 }
 
 .main-articles p{
@@ -235,6 +263,136 @@ a:hover{
   font-weight:900;
   letter-spacing:.04rem;
   margin-inline:auto 0;
+}
+
+form {
+  grid-column: 1/-1;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: .25em;
+  background-color: var(--light-color);
+  box-shadow: 0 0 .5vw -.25vw var(--primary-color);
+  border-radius: .4rem;
+  margin-inline: auto;
+  margin-block: 1em;
+  padding: 1em 2em;
+}
+
+form label {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: .025em;
+  font-size: min(2.7vw, 18px);
+  line-height: 1.75;
+  color: var(--sport-primary-color);
+  margin-block: 1em 0;
+}
+
+form textarea {
+  min-width: calc(100% - 2em);
+  max-width: calc(100% - 2em);
+  min-height: max(10vh, 10em);
+  max-height: max(25vh, 25em);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: min(2.7vw, 18px);
+  font-weight: 700;
+  letter-spacing: .025em;
+  line-height: 2;
+  padding: .75em .5em;
+}
+
+form input,
+form button {
+  width: calc(100% - 2em);
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: .025em;
+  font-size: 110%;
+  line-height: 1.75;
+  color: var(--sport-primary-color);
+  padding: 0.6em 1.2em;
+  cursor: pointer;
+}
+
+form button[type="submit"] {
+  font-size: 110%;
+  padding: 0.6em 1.2em;
+  margin-block: 2em 1em;
+}
+
+form .select {
+  width: 100%;
+  min-width: 15ch;
+  max-width: 30ch;
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+  border: .15em solid var(--primary-color);
+  border-radius: .4rem;
+  padding: 0.25em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  position: relative;
+  overflow: hidden;
+}
+
+.select::after {
+  content: "";
+  justify-self: end;
+  width: 0.8em;
+  height: 0.5em;
+  background-color: var(--primary-color);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
+
+select:focus+.focus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: .5em solid var(--primary-color);
+  border-radius: 0;
+}
+
+form select,
+form .select:after {
+  grid-area: select;
+}
+
+
+form select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+  cursor: pointer;
+  padding: .5em;
+}
+
+form select option {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Chewy", system-ui, sans-serif;
+  font-size: min(2vw, 18px);
+  background-color: hsl(var(--primary-white-opacity) / 0.9);
+  color: var(--primary-grey-darken);
+  font-weight: 500;
+  border-radius: 0;
 }
 
 @media screen and (max-width: 768px) {
