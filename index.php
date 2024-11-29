@@ -28,6 +28,7 @@ use Models\Article;
 use Controllers\ErrorsController;
 use Controllers\ArticlesController;
 use Controllers\BlogController;
+use Controllers\RouletteController;
 
 $article = new Article(BDD::connect());
 
@@ -93,6 +94,15 @@ switch (true) {
 
     $router->get("/articles", ArticlesController::getList());
     break;
+  case (str_contains($uri, "/slot-machine")):
+    $router->get("/slot-machine", RouletteController::index());
+     break;
+     case (str_contains($uri, "/play")):
+      $router->get("/play", RouletteController::spin());
+       break;
+
+  
+
   default:
     ErrorsController::launchError(404);
     break;

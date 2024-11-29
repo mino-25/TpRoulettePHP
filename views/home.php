@@ -11,6 +11,7 @@ ob_start();
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero laborum id quam illum cum deleniti velit obcaecati possimus blanditiis repellendus, earum quae, perspiciatis corrupti eius dolores laudantium deserunt quaerat. Qui cumque vero voluptas quae nihil dolorem dignissimos ratione itaque eum, debitis nobis sit provident dolore necessitatibus veritatis impedit ea perferendis?
       </p>
+      <li><a href="/slot-machine">Jouer</a></li>
     </article>
   </section>
 
